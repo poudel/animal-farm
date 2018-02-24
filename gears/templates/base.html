@@ -1,0 +1,65 @@
+{% load staticfiles %}
+{% load bootstrap4 %}
+
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title></title>
+    <meta name="description" content="Farmhouse management tool">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title></title>
+    {% bootstrap_css %}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css" rel="stylesheet">
+    <style>
+      .list-group-flush .list-group-item {
+        padding: 0.75rem 0.25rem;
+      }
+    </style>
+  </head>
+  <body style="margin: 0">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+	  <a class="navbar-brand" href="/">FarmHouse</a>
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+	      <span class="navbar-toggler-icon"></span>
+	  </button>
+	  <div class="collapse navbar-collapse" id="navbarNav">
+	      <ul class="navbar-nav">
+		  <li class="nav-item active">
+		      <a class="nav-link" href="{% url 'animal-list' %}">Livestock</a>
+		  </li>
+	      </ul>
+	  </div>
+      </nav>
+      
+      <div class="container-fluid">
+	  {% bootstrap_messages %}
+
+	  {% block content %}
+	  <div class="row">
+	      <div class="col-sm">
+		  One column
+	      </div>
+	  </div>
+	  {% endblock %}
+      </div>
+
+
+      {% csrf_token %}
+      {% bootstrap_javascript jquery='full' %}
+
+      <script type="text/javascript">
+       var _prelude = {
+	   "csrftoken": document.getElementsByName("csrfmiddlewaretoken")[0].value
+       };
+      </script>
+      {% block footer_js %}
+      <script>
+      </script>
+      {% endblock %}
+
+    <!-- <script src="{% static 'app.js' %}"></script> -->
+  </body>
+</html>

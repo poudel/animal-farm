@@ -1,0 +1,14 @@
+* TODOs
+** TODO Animal CRUD
+*** TODO Logging of disease and sickness
+*** TODO Animal detail page richness
+*** TODO pagination for animal list
+*** TODO Update view
+
+** TODO FarmHouse Dashboard
+*** TODO Products and quantity of the farm
+*** TODO Current status: monthly income, sick/healthy cattle, next month's projected income etc.
+*** TODO Actions required: Log a vet, log temperature, log stool/urine etc.
+*** TODO Auto generated remainders for medicine
+*** TODO Remainders for milking
+*** TODO Remainder for recurring transactions [e.g. go to the dairy to get milk money etc.]

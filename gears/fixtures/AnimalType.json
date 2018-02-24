@@ -1,0 +1,20 @@
+[
+{
+    "model": "gears.animaltype",
+    "pk": 1,
+    "fields": {
+        "created_at": "2017-12-30T03:38:52.077Z",
+        "modified_at": "2017-12-30T03:38:52.077Z",
+        "name": "\u0917\u093e\u0908"
+    }
+},
+{
+    "model": "gears.animaltype",
+    "pk": 2,
+    "fields": {
+        "created_at": "2017-12-30T03:38:58.297Z",
+        "modified_at": "2017-12-30T03:38:58.298Z",
+        "name": "\u092d\u0948\u0938\u0940"
+    }
+}
+]
