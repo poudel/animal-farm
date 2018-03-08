@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="row">
+    <div class="col-sm">
+	<h5>{{ object.tag }}</h5>
+
+	<div class="list-group list-group-flush">
+	    <div class="list-group-item">
+		<strong>{% trans "Breed:" %}</strong> {{ object.breed }}
+	    </div>
+
+	    <div class="list-group-item">
+		<strong>{% trans "Gender:" %}</strong> {{ object.get_gender_display }}
+	    </div>
+
+	    <div class="list-group-item">
+		<strong>{% trans "Age:" %}</strong> {{ object.age }} days
+	    </div>
+
+	    <div class="list-group-item">
+		<strong>{% trans "Is pregnant?" %}</strong>
+		{% if object.is_pregnant %}
+		<span class="text-success">
+		    {% trans "Yes" %}
+		    ({{ object.due_date|default:"Due date not available" }})
+		</span>
+		{% else %}
+		{% trans "No" %}
+		{% endif %}
+	    </div>
+
+	</div>
+    </div>
+</div>
+{% endblock content %}

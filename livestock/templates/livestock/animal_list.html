@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="row">
+    <div class="col-sm">
+
+        <h5>{% trans "Livestock in your farm" %}</h5>
+
+        <a href="{% url 'livestock:animal-create' %}" class="btn btn-link xtext-white">
+            {% trans "Register animal" %}
+        </a>
+
+        <div class="list-group list-group-flush">
+            {% for item in object_list %}
+            <div class="list-group-item">
+                <h5 class="mt-0 mb-1"><a href="{% url 'livestock:animal-detail' item.id %}">
+                    {{ item.identity }}</a>
+                </h5>
+                <div>
+		    <div class="dropdown float-right">
+			<button class="btn btn-light text-muted" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			    <span class="oi oi-cog" title="cog" aria-hidden="true"></span>
+			</button>
+			<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+			    <a class="dropdown-item" href="#">Mark as sick</a>
+			    {% if item.is_female and not item.is_pregnant %}
+			    <a class="dropdown-item" href="#">Mark as sick</a>
+			    {% endif %}
+			    <a class="dropdown-item" href="#">Add income</a>
+			    <a class="dropdown-item" href="#">Add expense</a>
+			</div>
+		    </div>
+
+                    {% trans "Lactation:" %} {{ item.lactation }}<br>
+
+                    {% trans "Health:" %}
+
+                    {% if item.is_sick %}
+                    <span class="text-danger">
+                        {% trans "Sick" %}
+                    </span>
+                    {% else %}
+                    <span class="text-success">
+                        {% trans "OK" %}
+                    </span>
+                    {% endif %}
+                </div>
+            </div>
+	    {% empty %}
+	    <div class="alert alert-warning">
+		{% trans "Sorry, no animal found in your farm. Please start registering your cattle" %}
+	    </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock content %}
