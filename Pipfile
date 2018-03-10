@@ -9,6 +9,7 @@ name = "pypi"
 
 django = "*"
 "django-bootstrap4" = "*"
+python-dateutil = "*"
 
 
 [dev-packages]

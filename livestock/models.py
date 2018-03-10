@@ -33,7 +33,7 @@ class Breed(BaseModel):
 
 
 class Herd(BaseModel):
-    name = models.CharField(max_length=50, unique=True)
+    name = models.CharField(_("name"), max_length=50, unique=True)
 
     def __str__(self):
         return self.name
@@ -127,7 +127,7 @@ class Animal(BaseModel):
     @property
     def age(self):
         if self.dob:
-            return (date.today() - self.dob).days
+            return (date.today() - self.dob)
 
     @property
     def is_female(self):
@@ -237,7 +237,11 @@ class SicknessType(BaseModel):
 
 
 class AnimalSickness(BaseModel):
-    animal = models.ForeignKey(Animal,  verbose_name=_("animal"), on_delete=models.CASCADE)
+    animal = models.ForeignKey(
+        Animal,
+        verbose_name=_("animal"),
+        on_delete=models.CASCADE
+    )
     description = models.CharField(_("description"), max_length=200)
     is_recovered = models.BooleanField(_("is recovered"), default=False)
     recovered_on = models.DateField(_("recovered on"), null=True, blank=True)
@@ -263,10 +267,24 @@ class MedicationType(BaseModel):
 
 
 class AnimalMedication(BaseModel):
-    type = models.ForeignKey(MedicationType, verbose_name=_("medication type"), on_delete=models.CASCADE)
-    animal = models.ForeignKey(Animal, verbose_name=_("animal"), on_delete=models.CASCADE)
+    type = models.ForeignKey(
+        MedicationType,
+        verbose_name=_("medication type"),
+        on_delete=models.CASCADE
+    )
+    animal = models.ForeignKey(
+        Animal,
+        verbose_name=_("animal"),
+        on_delete=models.CASCADE
+    )
     name = models.CharField(_("name"), max_length=100)
-    txn = models.ForeignKey(AnimalTxn, verbose_name=_("transaction"), null=True, blank=True, on_delete=models.CASCADE)
+    txn = models.ForeignKey(
+        AnimalTxn,
+        verbose_name=_("transaction"),
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE
+    )
 
     def __str__(self):
         return self.name

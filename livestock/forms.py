@@ -43,3 +43,25 @@ class AnimalForm(forms.ModelForm):
     def save(self, *args, **kwargs):
         self.instance.farm = self.request.farm
         return super().save(*args, **kwargs)
+
+    def clean(self):
+        cd = super().clean()
+
+        identity_type, identifier = cd.get('identity_type'), cd.get('identifier')
+
+        if identity_type and identifier:
+            try:
+                animal = Animal.objects.get(
+                    identity_type=identity_type,
+                    identifier__iexact=identifier,
+                    farm=self.request.farm
+                )
+            except Animal.DoesNotExist:
+                pass
+            else:
+                self.add_error(
+                    "identifier",
+                    "A cattle identified as '{}' already exists."
+                    .format(animal.identity)
+                )
+        return cd

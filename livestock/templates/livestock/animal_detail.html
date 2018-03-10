@@ -1,34 +1,123 @@
 {% extends "base.html" %}
+{% load humanize %}
 {% load i18n %}
 
 {% block content %}
 <div class="row">
     <div class="col-sm">
-	<h5>{{ object.tag }}</h5>
-
 	<div class="list-group list-group-flush">
+            <div class="list-group-item">
+                <a href="{% url 'livestock:animal-update' object.uuid %}"
+                   class="btn btn-outline-primary btn-sm">Edit {{ object.identifier }}
+                </a>
+
+                <a href="{% url 'livestock:animal-delete' object.uuid %}"
+                   class="btn btn-outline-danger btn-sm">Delete
+                </a>
+
+            </div>
+
+            <div class="list-group-item">
+                <strong>{{ object.identity_type }}:</strong> {{ object.identifier }}
+            </div>
+
+            <div class="list-group-item">
+                <strong>Health:</strong>
+                {% if object.is_sick %}
+                <span class="oi oi-circle-x text-danger" title="circle-x" aria-hidden="true"></span> Sick
+                {% else %}
+                <span class="oi oi-circle-check text-success" title="circle-check" aria-hidden="true"></span> OK
+                {% endif %}
+            </div>
+
+            <div class="list-group-item">
+                <strong>{% trans "Income:" %}</strong> -
+
+                <a href="{% url 'livestock:animal-update' object.uuid %}"
+                   class="btn btn-outline-primary btn-sm">Add income
+                </a>
+
+            </div>
+
+            <div class="list-group-item">
+                <strong>{% trans "Expenses:" %}</strong> -
+
+                <a href="{% url 'livestock:animal-update' object.uuid %}"
+                   class="btn btn-link btn-sm">Add expenses
+                </a>
+
+            </div>
+            {% if request.farm.has_herd %}
 	    <div class="list-group-item">
-		<strong>{% trans "Breed:" %}</strong> {{ object.breed }}
+		<strong>{% trans "Herd:" %}</strong> {{ object.herd|default:"-" }}
+	    </div>
+            {% endif %}
+
+            {% if request.farm.has_breed %}
+	    <div class="list-group-item">
+		<strong>{% trans "Breed:" %}</strong> {{ object.breed|default:"-" }}
+	    </div>
+            {% endif %}
+
+            {% if request.farm.has_weight %}
+	    <div class="list-group-item">
+		<strong>{% trans "Weight:" %}</strong>
+                {% if object.weight %}{{ object.weight }} KG{% else %}-{% endif %}
+	    </div>
+            {% endif %}
+
+	    <div class="list-group-item">
+		<strong>{% trans "Age:" %}</strong>
+                {% if object.age %}{{ object.age.days }} day(s){% else %}-{% endif %}
 	    </div>
 
 	    <div class="list-group-item">
 		<strong>{% trans "Gender:" %}</strong> {{ object.get_gender_display }}
 	    </div>
 
+            {% if object.gender == "Female" %}
 	    <div class="list-group-item">
-		<strong>{% trans "Age:" %}</strong> {{ object.age }} days
+                <strong>{% trans "Is pregnant:" %}</strong>
+
+                {% if object.is_pregnant %}
+                <span class="oi oi-circle-check text-success" title="circle-check" aria-hidden="true"></span>
+                {% trans "Yes" %}
+                {% else %}
+                <span class="oi oi-circle-x text-danger" title="circle-x" aria-hidden="true"></span>
+		{% trans "No" %}
+                {% endif %}
 	    </div>
 
 	    <div class="list-group-item">
-		<strong>{% trans "Is pregnant?" %}</strong>
-		{% if object.is_pregnant %}
-		<span class="text-success">
-		    {% trans "Yes" %}
-		    ({{ object.due_date|default:"Due date not available" }})
-		</span>
-		{% else %}
-		{% trans "No" %}
-		{% endif %}
+                <strong>{% trans "Lactation:" %}</strong>
+                {% if object.lactation == "Lactating" %}
+                <span class="oi oi-circle-check text-success" title="circle-check" aria-hidden="true"></span>
+                {% else %}
+                <span class="oi oi-circle-x text-danger" title="circle-x" aria-hidden="true"></span>
+                {% endif %}
+                {{ object.lactation }}
+            </div>
+
+            {% if object.lactation == "Lactating" %}
+	    <div class="list-group-item">
+                <strong>{% trans "Milk per day" %}</strong>
+                {{ object.milk_day }}
+            </div>
+            {% endif %}
+
+
+            {% endif %}
+
+	    <div class="list-group-item">
+		<strong>{% trans "Registered:" %}</strong>
+                {{ object.created_at }}
+                <small class="text-muted">({{ object.created_at|naturaltime }})</small>
+	    </div>
+
+	    <div class="list-group-item">
+		<strong>{% trans "Modified:" %}</strong>
+                {{ object.modified_at }}
+                <small class="text-muted">({{ object.modified_at|naturaltime }})</small>
 	    </div>
 
 	</div>

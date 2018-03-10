@@ -14,7 +14,7 @@
         <div class="list-group list-group-flush">
             {% for item in object_list %}
             <div class="list-group-item">
-                <h5 class="mt-0 mb-1"><a href="{% url 'livestock:animal-detail' item.id %}">
+                <h5 class="mt-0 mb-1"><a href="{% url 'livestock:animal-detail' item.uuid %}">
                     {{ item.identity }}</a>
                 </h5>
                 <div>
@@ -25,10 +25,11 @@
 			<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
 			    <a class="dropdown-item" href="#">Mark as sick</a>
 			    {% if item.is_female and not item.is_pregnant %}
-			    <a class="dropdown-item" href="#">Mark as sick</a>
+			    <a class="dropdown-item" href="#">Mark as pregnant</a>
 			    {% endif %}
 			    <a class="dropdown-item" href="#">Add income</a>
 			    <a class="dropdown-item" href="#">Add expense</a>
+			    <a class="dropdown-item" href="{% url 'livestock:animal-update' item.uuid %}">Update</a>
 			</div>
 		    </div>
 

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+
+
+{% block content %}
+<div class="row">
+    <div class="col-sm">
+        <div class="card mt-2">
+	    <form action="" method="post">
+	        {% csrf_token %}
+
+                <div class="card-header">
+                    Please confirm deletion of {{ object.identity }}
+                </div>
+                <div class="card-body">
+                    <h5 class="text-danger card-title">Are you sure?</h5>
+                    <p class="card-text">
+                        Deleting <strong>{{ object.identity }}</strong>
+                        will permanently remove it along with information.
+                    </p>
+
+                    <a class="btn btn-success" href="{% url 'livestock:animal-detail' object.uuid %}">Cancel</a>
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

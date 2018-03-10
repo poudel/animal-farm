@@ -5,13 +5,27 @@
 {% block content %}
 <div class="row">
     <div class="col-sm">
+        {% if object %}
+        <div class="mb-3 mt-2">
+            <h5>
+                <a href="{% url 'livestock:animal-detail' object.uuid %}">
+                    <span class="oi oi-arrow-left" title="arrow-left" aria-hidden="true"></span>
+                </a>
+                Editing {{ object.identity }}
+            </h5>
+        </div>
+        {% endif %}
 	<form action="" method="post">
 	    {% csrf_token %}
 	    {% bootstrap_form form %}
 
 	    {% buttons %}
 	    <button type="submit" class="btn btn-primary">
-		Submit
+              {% if object.id %}
+                Update
+              {% else %}
+	        Save
+              {% endif %}
 	    </button>
 	    {% endbuttons %}	    
 	</form>

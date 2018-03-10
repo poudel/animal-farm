@@ -1,6 +1,8 @@
 * TODOs
 ** TODO Tools to program RFID chips
 ** TODO Automatic qr code + tag generation
+** TODO Medication
+*** TODO mark as sick
 
 ** TODO Animal CRUD
 *** TODO herds
