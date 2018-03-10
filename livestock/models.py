@@ -211,7 +211,7 @@ class AnimalTxn(BaseModel):
 
         if self.animal_id:
             m = models
-            aggr = AnimalTxn.objects.filter(animal_id=self.animal_id).aggregate(
+            aggr = AnimalTxn.objects.active(animal_id=self.animal_id).aggregate(
                 net_income=m.Sum(m.Case(m.When(type__is_expense=False, then=m.F('amount')))),
                 net_expense=m.Sum(m.Case(m.When(type__is_expense=True, then=m.F('amount')))),
             )

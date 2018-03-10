@@ -22,6 +22,8 @@ __all__ = [
 
 
 class AnimalTxnMixin:
+    model = AnimalTxn
+    queryset = AnimalTxn.objects.active()
 
     def get_queryset(self):
         qs = super().get_queryset()
@@ -40,28 +42,32 @@ class TxnFormMixin:
     model = AnimalTxn
     template_name = "generic_form.html"
     form_class = AnimalTxnForm
+    success_message = "mmm"
 
     def get_form_kwargs(self):
         kw = super().get_form_kwargs()
         kw['request'] = self.request
         return kw
 
-
-class AnimalTxnCreate(TxnFormMixin, CreateView):
-
     def get_success_url(self):
-        messages.success(self.request, "Successfully added transaction")
+        messages.success(self.request, self.success_message)
         return reverse_lazy("livestock:txn-detail", args=[self.object.uuid])
 
 
+class AnimalTxnCreate(TxnFormMixin, CreateView):
+    success_message = "Successfully added transaction."
+
+
 class AnimalTxnUpdate(TxnFormMixin, UpdateView):
-    pass
+    success_message = "Successfully updated transaction."
 
 
 class AnimalTxnDetail(AnimalTxnMixin, DetailView):
-    model = AnimalTxn
+    pass
 
 
-class AnimalTxnDelete(AnimalTxnMixin, DetailView):
+class AnimalTxnDelete(AnimalTxnMixin, DeleteView):
     success_url = reverse_lazy("livestock:txn-list")
-    hard_delete = True
+    hard_delete = False
+    template_name = "generic_delete_confirm.html"
+    detail_url_name = "livestock:txn-detail"

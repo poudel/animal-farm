@@ -18,8 +18,12 @@
     CLOSED: [2018-03-10 Sat 10:05] SCHEDULED: <2018-03-10 Sat>
 *** DONE List transaction for an animal using filters
     CLOSED: [2018-03-10 Sat 21:12] SCHEDULED: <2018-03-10 Sat>
-*** TODO Transaction detail page
-    SCHEDULED: <2018-03-10 Sat>
+*** DONE Transaction detail page
+    CLOSED: [2018-03-10 Sat 22:28] SCHEDULED: <2018-03-10 Sat>
+*** DONE Transaction update page
+    CLOSED: [2018-03-10 Sat 22:38] SCHEDULED: <2018-03-10 Sat>
+*** DONE Transaction delete page
+    CLOSED: [2018-03-10 Sat 22:38] SCHEDULED: <2018-03-10 Sat>
 
 ** TODO Animal CRUD
 *** TODO herds

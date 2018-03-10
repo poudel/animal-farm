@@ -67,5 +67,7 @@ class AnimalUpdate(AnimalDetailMixin, AnimalFormMixin, UpdateView):
 
 
 class AnimalDelete(AnimalDetailMixin, DeleteView):
+    template_name = "generic_delete_confirm.html"
     success_url = reverse_lazy("livestock:animal-list")
     message = "{self.object.identity} has been deleted."
+    detail_url_name = "livestock:animal-detail"

@@ -1,4 +1,5 @@
 from django.core.exceptions import ImproperlyConfigured
+from django.urls import reverse
 from django.contrib import messages
 from django.views.generic import (
     DetailView as DetailViewBase,
@@ -51,6 +52,7 @@ class DeleteView(LoginRequiredMixin, DeleteViewBase):
     slug_url_kwarg = "uuid"
     hard_delete = False
     message = "{self.object} has been deleted."
+    detail_url_name = None
 
     def delete(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -64,3 +66,11 @@ class DeleteView(LoginRequiredMixin, DeleteViewBase):
             self.message.format(self=self)
         )
         return super().get_success_url()
+
+    def get_cancel_url(self):
+        return reverse(self.detail_url_name, args=[self.object.uuid])
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx['cancel_url'] = self.get_cancel_url()
+        return ctx

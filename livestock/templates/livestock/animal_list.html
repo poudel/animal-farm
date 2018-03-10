@@ -29,8 +29,8 @@
 			    {% if item.is_female and not item.is_pregnant %}
 			    <a class="dropdown-item" href="#">Mark as pregnant</a>
 			    {% endif %}
-			    <a class="dropdown-item" href="#">Add income</a>
-			    <a class="dropdown-item" href="#">Add expense</a>
+			    <a class="dropdown-item" href="{% url 'livestock:txn-list' %}?animal={{ item.uuid }}&type__is_expense=False">Revenue</a>
+			    <a class="dropdown-item" href="{% url 'livestock:txn-list' %}?animal={{ item.uuid }}&type__is_expense=True">Expenses</a>
 			    <a class="dropdown-item" href="{% url 'livestock:animal-update' item.uuid %}">Update</a>
 			</div>
 		    </div>
@@ -42,19 +42,27 @@
                         {% trans "Sick" %}
                     </span>
                     {% else %}
-                    <span class="text-success">
+                        {% fa "check-circle text-success" %}
                         {% trans "OK" %}
-                    </span>
                     {% endif %}
 
                     <br>
 
                     {% trans "Profit:" %}
+                    <a href="{% url 'livestock:txn-list' %}?animal={{ item.uuid }}">
+
                     {% if item.is_profit %}
-                    <span class="text-success">Yes <small>(Rs. {{ item.roi }})</small></span>
+                        <span class="text-success">Yes
+                            <small>(Rs. {{ item.roi }})</small>
+                        </span>
                     {% else %}
-                    <span class="text-danger">No <small>(Rs. {{ item.roi }})</small></span>
+                        <span class="text-danger">
+                            No
+                            <small>(Rs. {{ item.roi }})</small>
+                        </span>
                     {% endif %}
+
+                    </a>
                 </div>
             </div>
 	    {% empty %}

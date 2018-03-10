@@ -22,10 +22,10 @@
             {% endifchanged %}
 
             <div class="list-group-item">
-
-                {% if item.animal %}
-                {{ item.owner }}<br>
-                {% endif %}
+                <a href="{% url 'livestock:txn-detail' item.uuid %}">
+                    {{ item.owner }}
+                </a>
+                <br>
 
                 {{ item.type }} <br>
 

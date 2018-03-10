@@ -8,20 +8,55 @@
 	<div class="list-group list-group-flush">
             <div class="list-group-item">
 
-                <a href="{% url 'livestock:animaltxn-list' %}"
+                <a href="{% url 'livestock:txn-list' %}"
                    class="btn btn-link btn-sm">
                     {% trans "View all" %}
                 </a>
 
                 <div class="float-right">
-                    <a href="{% url 'livestock:animaltxn-delete' object.uuid %}"
+                    <a href="{% url 'livestock:txn-delete' object.uuid %}"
                        class="btn btn-outline-danger btn-sm">
                         {% trans "Delete" %}
                     </a>
-                </div>
 
+                    <a href="{% url 'livestock:txn-update' object.uuid %}"
+                       class="btn btn-outline-primary btn-sm">
+                        {% trans "Edit" %}
+                    </a>
+
+                </div>
             </div>
 
+            {% if object.animal %}
+            <div class="list-group-item">
+                <strong>{% trans "Animal" %}:</strong> {{ object.animal }}
+            </div>
+            {% endif %}
+
+            <div class="list-group-item">
+                <strong>{% trans "Type" %}:</strong> {{ object.type }}
+            </div>
+
+            <div class="list-group-item">
+                <strong>{% trans "Is expense" %}:</strong> {{ object.type.is_expense }}
+            </div>
+
+            <div class="list-group-item">
+                <strong>{% trans "Amount" %}:</strong>
+                <span class="text-{% if object.type.is_expense %}danger{% else %}success{% endif %}">
+                    Rs. {{ object.amount }}
+                </span>
+            </div>
+
+            <div class="list-group-item">
+                <strong>{% trans "Date" %}:</strong>
+                {{ object.created_at.date }}
+                <small class="text-muted">({{ object.created_at|naturaltime }})</small>
+            </div>
+
+            <div class="list-group-item">
+                <strong>{% trans "Remarks" %}:</strong> {{ object.remarks|default:"-" }}
+            </div>
 
         </div>
     </div>
