@@ -1,20 +1,11 @@
 {% extends "base.html" %}
 {% load bootstrap4 %}
-{% load font_awesome %}
+
 
 {% block content %}
 <div class="row">
     <div class="col-sm">
-        {% if object %}
-        <div class="mb-3 mt-2">
-            <h5>
-                <a href="{% url 'livestock:animal-detail' object.uuid %}">
-                    {% fa 'arrow-left' %}
-                </a>
-                Editing {{ object.identity }}
-            </h5>
-        </div>
-        {% endif %}
+        {{ header_message }}
 	<form action="" method="post">
 	    {% csrf_token %}
 	    {% bootstrap_form form %}

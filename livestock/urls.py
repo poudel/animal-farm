@@ -24,4 +24,26 @@ urlpatterns = [
     path('animal/<uuid:uuid>/delete/',
          views.AnimalDelete.as_view(),
          name="animal-delete"),
+
+    # finance
+    path('transaction/',
+         views.AnimalTxnList.as_view(),
+         name="txn-list"),
+
+    path('transaction/create/',
+         views.AnimalTxnCreate.as_view(),
+         name="txn-create"),
+
+    path('transaction/<uuid:uuid>/',
+         views.AnimalTxnDetail.as_view(),
+         name="txn-detail"),
+
+    path('transaction/<uuid:uuid>/update/',
+         views.AnimalTxnUpdate.as_view(),
+         name="txn-update"),
+
+    path('transaction/<uuid:uuid>/delete/',
+         views.AnimalTxnDelete.as_view(),
+         name="txn-delete"),
+
 ]

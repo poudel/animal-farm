@@ -1,5 +1,6 @@
 from django import forms
-from livestock.models import Animal, IdentityType
+from django.utils.translation import ugettext_lazy as _
+from livestock.models import Animal, IdentityType, AnimalTxn, TxnType
 
 
 class AnimalForm(forms.ModelForm):
@@ -51,17 +52,41 @@ class AnimalForm(forms.ModelForm):
 
         if identity_type and identifier:
             try:
-                animal = Animal.objects.get(
+                queryset = Animal.objects.filter(
                     identity_type=identity_type,
                     identifier__iexact=identifier,
                     farm=self.request.farm
                 )
+                if self.instance:
+                    queryset = queryset.exclude(id=self.instance.id)
+
+                animal = queryset.get()
             except Animal.DoesNotExist:
                 pass
             else:
                 self.add_error(
                     "identifier",
-                    "A cattle identified as '{}' already exists."
+                    "The identifier '{}' is not available for registration."
                     .format(animal.identity)
                 )
         return cd
+
+
+class AnimalTxnForm(forms.ModelForm):
+
+    class Meta:
+        model = AnimalTxn
+        fields = ("animal", "type", "amount", "remarks")
+        help_texts = {
+            "animal": _("Specify an animal if this transaction is specific to it.")
+        }
+
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop("request")
+        super().__init__(*args, **kwargs)
+        self.fields['animal'].queryset = Animal.get_for_farm(self.request.farm)
+
+    def save(self, *args, **kwargs):
+        self.instance.farm = self.request.farm
+        self.instance.created_by = self.request.user
+        return super().save(*args, **kwargs)

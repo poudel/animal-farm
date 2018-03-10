@@ -45,19 +45,17 @@ class AnimalCreate(AnimalFormMixin, CreateView):
 
 
 class AnimalList(ListView):
-    model = Animal
-    
+    queryset = Animal.objects.active()
+
     def get_queryset(self):
-        return super().get_queryset().filter(
-            farm__owner=self.request.user
-        ).order_by('-id')
+        return self.queryset.filter(farm__owner=self.request.user).order_by('-id')
 
 
 class AnimalDetailMixin:
-    model = Animal
+    queryset = Animal.objects.active()
 
     def get_queryset(self):
-        return super().get_queryset().filter(farm__owner=self.request.user)
+        return self.queryset.filter(farm__owner=self.request.user)
 
 
 class AnimalDetail(AnimalDetailMixin, DetailView):
@@ -69,11 +67,5 @@ class AnimalUpdate(AnimalDetailMixin, AnimalFormMixin, UpdateView):
 
 
 class AnimalDelete(AnimalDetailMixin, DeleteView):
-    hard_delete = True
-
-    def get_success_url(self):
-        messages.error(
-            self.request,
-            "{self.object.identity} has been deleted.".format(self=self)
-        )
-        return reverse_lazy("livestock:animal-list")
+    success_url = reverse_lazy("livestock:animal-list")
+    message = "{self.object.identity} has been deleted."

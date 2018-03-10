@@ -9,7 +9,9 @@ name = "pypi"
 
 django = "*"
 "django-bootstrap4" = "*"
-python-dateutil = "*"
+django-fa = "*"
+django-taggit = "*"
+django-filter = "*"
 
 
 [dev-packages]

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% load i18n %}
+
+{% block content %}
+<div class="row">
+    <div class="col-sm">
+	<div class="list-group list-group-flush">
+            <div class="list-group-item">
+
+                <a href="{% url 'livestock:animaltxn-list' %}"
+                   class="btn btn-link btn-sm">
+                    {% trans "View all" %}
+                </a>
+
+                <div class="float-right">
+                    <a href="{% url 'livestock:animaltxn-delete' object.uuid %}"
+                       class="btn btn-outline-danger btn-sm">
+                        {% trans "Delete" %}
+                    </a>
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+{% endblock content %}

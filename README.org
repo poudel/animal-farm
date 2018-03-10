@@ -1,15 +1,34 @@
 * TODOs
-** TODO Tools to program RFID chips
-** TODO Automatic qr code + tag generation
-** TODO Medication
-*** TODO mark as sick
+** Medication and Sickness Logging
+*** TODO Mark an animal as sick
+    SCHEDULED: <2018-03-10 Sat>
+*** TODO Add next occurrence of medication
+    SCHEDULED: <2018-03-10 Sat>
+*** TODO Add AnimalEvent for all future and past occurrences
+    SCHEDULED: <2018-03-10 Sat>
+
+** Authentication and Registration
+*** TODO Login with Facebook using allauth
+*** TODO Custom user model
+
+** Profit and Loss
+*** DONE Add transaction of an animal
+    CLOSED: [2018-03-10 Sat 21:12] SCHEDULED: <2018-03-10 Sat>
+*** DONE Add transaction of a farm
+    CLOSED: [2018-03-10 Sat 10:05] SCHEDULED: <2018-03-10 Sat>
+*** DONE List transaction for an animal using filters
+    CLOSED: [2018-03-10 Sat 21:12] SCHEDULED: <2018-03-10 Sat>
+*** TODO Transaction detail page
+    SCHEDULED: <2018-03-10 Sat>
 
 ** TODO Animal CRUD
 *** TODO herds
 *** TODO Logging of disease and sickness
-*** TODO Animal detail page richness
 *** TODO pagination for animal list
-*** TODO Update view
+*** DONE Animal detail page richness
+    CLOSED: [2018-03-10 Sat 07:39]
+*** DONE Update view
+    CLOSED: [2018-03-10 Sat 07:39]
 
 ** TODO FarmHouse Dashboard
 *** TODO Dashboard https://lh3.googleusercontent.com/I54v9BUEW5FA0Q8sDYR4IZBESTzBqarmGRnodavbZi-90lfrma-pCYVAM_20SBLSBA=h900
@@ -19,3 +38,6 @@
 *** TODO Auto generated remainders for medicine
 *** TODO Remainders for milking
 *** TODO Remainder for recurring transactions [e.g. go to the dairy to get milk money etc.]
+
+** TODO Tools to program RFID chips
+** TODO Automatic qr code + tag generation

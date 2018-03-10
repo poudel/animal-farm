@@ -40,8 +40,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'bootstrap4',
+    'fa',
+    'taggit',
+    'django_filters',
     'gears',
-    'livestock'
+    'livestock',
+    # 'market',
 ]
 
 MIDDLEWARE = [
@@ -124,3 +128,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+TAGGIT_CASE_INSENSITIVE = True
+

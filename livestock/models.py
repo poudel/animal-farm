@@ -112,17 +112,27 @@ class Animal(BaseModel):
     is_sick = models.BooleanField(_("is sick"), default=False)
     weight = models.FloatField(_("weight"), null=True, blank=True)
 
+    net_income = models.PositiveIntegerField(
+        _("net income"),
+        default=0
+    )
+
+    net_expense = models.PositiveIntegerField(
+        _("net expense"),
+        default=0
+    )
+
     class Meta:
         unique_together = [('farm', 'identity_type', 'identifier')]
         verbose_name = _("animal")
         verbose_name_plural = _("animals")
 
     def __str__(self):
-        return f"{self.farm}; {self.identity};"
+        return self.identity
 
     @property
     def identity(self):
-        return "{}-{}".format(self.identity_type, self.identifier)
+        return "{}: {}".format(self.identity_type, self.identifier)
 
     @property
     def age(self):
@@ -136,6 +146,18 @@ class Animal(BaseModel):
     @property
     def is_male(self):
         return not self.is_female
+
+    @classmethod
+    def get_for_farm(cls, farm):
+        return cls.objects.filter(farm=farm)
+
+    @property
+    def roi(self):
+        return self.net_income - self.net_expense
+
+    @property
+    def is_profit(self):
+        return self.roi > 0
 
 
 class TxnType(BaseModel):
@@ -152,12 +174,15 @@ class TxnType(BaseModel):
 
 
 class AnimalTxn(BaseModel):
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="created_transactions"
+    )
     farm = models.ForeignKey(
         Farm,
         verbose_name=_("farm"),
         on_delete=models.CASCADE,
-        null=True,
-        blank=True
     )
     animal = models.ForeignKey(
         Animal,
@@ -181,9 +206,27 @@ class AnimalTxn(BaseModel):
     def __str__(self):
         return f"{self.animal} - {self.type} - {self.amount}"
 
+    def save(self, *args, **kwargs):
+        txn = super().save(*args, **kwargs)
+
+        if self.animal_id:
+            m = models
+            aggr = AnimalTxn.objects.filter(animal_id=self.animal_id).aggregate(
+                net_income=m.Sum(m.Case(m.When(type__is_expense=False, then=m.F('amount')))),
+                net_expense=m.Sum(m.Case(m.When(type__is_expense=True, then=m.F('amount')))),
+            )
+            Animal.objects.filter(id=self.animal_id).update(
+                net_income=aggr['net_income'] or 0,
+                net_expense=aggr['net_expense'] or 0
+            )
+        return txn
+
     @property
     def owner(self):
-        return self.animal or self.farm
+        if self.animal:
+            return self.animal.identity
+        else:
+            return self.farm
 
 
 class AnimalEventType(BaseModel):

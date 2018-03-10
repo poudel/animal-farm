@@ -1,19 +1,30 @@
 {% extends "base.html" %}
 {% load humanize %}
 {% load i18n %}
+{% load font_awesome %}
 
 {% block content %}
 <div class="row">
     <div class="col-sm">
 	<div class="list-group list-group-flush">
             <div class="list-group-item">
-                <a href="{% url 'livestock:animal-update' object.uuid %}"
-                   class="btn btn-outline-primary btn-sm">Edit {{ object.identifier }}
+
+                <a href="{% url 'livestock:animal-list' %}"
+                   class="btn btn-link btn-sm">
+                    {% trans "View all" %}
                 </a>
 
-                <a href="{% url 'livestock:animal-delete' object.uuid %}"
-                   class="btn btn-outline-danger btn-sm">Delete
-                </a>
+                <div class="float-right">
+                    <a href="{% url 'livestock:animal-delete' object.uuid %}"
+                       class="btn btn-outline-danger btn-sm">
+                        {% trans "Delete" %}
+                    </a>
+
+                    <a href="{% url 'livestock:animal-update' object.uuid %}"
+                       class="btn btn-outline-primary btn-sm">
+                        {% trans "Edit" %}
+                    </a>
+                </div>
 
             </div>
 
@@ -24,26 +35,30 @@
             <div class="list-group-item">
                 <strong>Health:</strong>
                 {% if object.is_sick %}
-                <span class="oi oi-circle-x text-danger" title="circle-x" aria-hidden="true"></span> Sick
+                {% fa 'times-circle text-danger' %} {% trans "Sick" %}
                 {% else %}
-                <span class="oi oi-circle-check text-success" title="circle-check" aria-hidden="true"></span> OK
+                {% fa 'check-circle text-success' %} {% trans "OK" %}
                 {% endif %}
             </div>
 
             <div class="list-group-item">
-                <strong>{% trans "Income:" %}</strong> -
+                <strong>{% trans "Revenue:" %}</strong>
+                Rs. {{ object.net_income }}
 
-                <a href="{% url 'livestock:animal-update' object.uuid %}"
-                   class="btn btn-outline-primary btn-sm">Add income
+                <a href="{% url 'livestock:txn-list' %}?animal={{ object.uuid }}&type__is_expense=False"
+                   class="btn btn-link btn-sm">
+                    {% trans "Revenue detail" %}
                 </a>
 
             </div>
 
             <div class="list-group-item">
-                <strong>{% trans "Expenses:" %}</strong> -
+                <strong>{% trans "Expenses:" %}</strong>
+                Rs. {{ object.net_expense }}
 
-                <a href="{% url 'livestock:animal-update' object.uuid %}"
-                   class="btn btn-link btn-sm">Add expenses
+                <a href="{% url 'livestock:txn-list' %}?animal={{ object.uuid }}&type__is_expense=True"
+                   class="btn btn-link btn-sm">
+                    {% trans "Expense detail" %}
                 </a>
 
             </div>
@@ -80,20 +95,20 @@
                 <strong>{% trans "Is pregnant:" %}</strong>
 
                 {% if object.is_pregnant %}
-                <span class="oi oi-circle-check text-success" title="circle-check" aria-hidden="true"></span>
+                {% fa 'check-circle text-success' %}
                 {% trans "Yes" %}
                 {% else %}
-                <span class="oi oi-circle-x text-danger" title="circle-x" aria-hidden="true"></span>
-		{% trans "No" %}
+                {% fa 'times-circle text-danger' %}
+                {% trans "No" %}
                 {% endif %}
 	    </div>
 
 	    <div class="list-group-item">
                 <strong>{% trans "Lactation:" %}</strong>
                 {% if object.lactation == "Lactating" %}
-                <span class="oi oi-circle-check text-success" title="circle-check" aria-hidden="true"></span>
+                {% fa 'check-circle text-success' %}
                 {% else %}
-                <span class="oi oi-circle-x text-danger" title="circle-x" aria-hidden="true"></span>
+                {% fa 'times-circle text-danger' %}
                 {% endif %}
                 {{ object.lactation }}
             </div>
@@ -110,13 +125,13 @@
 
 	    <div class="list-group-item">
 		<strong>{% trans "Registered:" %}</strong>
-                {{ object.created_at }}
+                {{ object.created_at.date }}
                 <small class="text-muted">({{ object.created_at|naturaltime }})</small>
 	    </div>
 
 	    <div class="list-group-item">
 		<strong>{% trans "Modified:" %}</strong>
-                {{ object.modified_at }}
+                {{ object.modified_at.date }}
                 <small class="text-muted">({{ object.modified_at|naturaltime }})</small>
 	    </div>
 
