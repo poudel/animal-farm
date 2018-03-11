@@ -1,5 +1,6 @@
 import uuid
 from django.db import models
+from django.urls import reverse
 from django.conf import settings
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
@@ -53,9 +54,21 @@ class Farm(BaseModel):
         null=True
     )
 
-    has_breed = models.BooleanField(_("has breed"), default=True)
-    has_herd = models.BooleanField(_("has herd"), default=True)
-    has_weight = models.BooleanField(_("has weight"), default=True)
+    has_breed = models.BooleanField(
+        _("show breed field"),
+        default=True,
+        help_text=_("If enabled, will show breed field while adding/updating animals.")
+    )
+    has_herd = models.BooleanField(
+        _("show herd field"),
+        default=True,
+        help_text=_("If enabled, will show herd field while adding/updating animals.")
+    )
+    has_weight = models.BooleanField(
+        _("show weight field"),
+        default=True,
+        help_text=_("If enabled, will show weight field while adding/updating animals.")
+    )
     has_dairy_cattle = models.BooleanField(_("has dairy cattle"), default=True)
 
     class Meta:
@@ -64,3 +77,6 @@ class Farm(BaseModel):
 
     def __str__(self):
         return self.name or str(self.owner)
+
+    def get_absolute_url(self):
+        return reverse("gears:farm-detail", args=[self.uuid])

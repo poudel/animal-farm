@@ -112,12 +112,12 @@ class Animal(BaseModel):
     is_sick = models.BooleanField(_("is sick"), default=False)
     weight = models.FloatField(_("weight"), null=True, blank=True)
 
-    net_income = models.PositiveIntegerField(
+    net_income = models.FloatField(
         _("net income"),
         default=0
     )
 
-    net_expense = models.PositiveIntegerField(
+    net_expense = models.FloatField(
         _("net expense"),
         default=0
     )

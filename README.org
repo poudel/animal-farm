@@ -42,6 +42,7 @@
 *** TODO Auto generated remainders for medicine
 *** TODO Remainders for milking
 *** TODO Remainder for recurring transactions [e.g. go to the dairy to get milk money etc.]
+*** TODO List of most sick animals
 
 ** TODO Tools to program RFID chips
 ** TODO Automatic qr code + tag generation

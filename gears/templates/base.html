@@ -34,6 +34,14 @@
 		  <li class="nav-item active">
 		      <a class="nav-link" href="{% url 'livestock:txn-list' %}">Transactions</a>
 		  </li>
+
+
+                  {% if request.farm %}
+		  <li class="nav-item active">
+		      <a class="nav-link" href="{% url 'gears:farm-detail' request.farm.uuid %}">Farm settings</a>
+		  </li>
+                  {% endif %}
+
                   {% comment %}
 		  <li class="nav-item active">
 		      <a class="nav-link" href="{% url 'livestock:txn-list' %}">Market</a>

@@ -12,6 +12,7 @@ django = "*"
 django-fa = "*"
 django-taggit = "*"
 django-filter = "*"
+django-allauth = "*"
 
 
 [dev-packages]

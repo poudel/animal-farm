@@ -2,8 +2,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
-from livestock.models import Animal
-from livestock.forms import AnimalForm
+
 from gears.views import (
     CreateView,
     ListView,
@@ -11,6 +10,8 @@ from gears.views import (
     DetailView,
     DeleteView
 )
+from livestock.models import Animal
+from livestock.forms import AnimalForm
 
 
 __all__ = [

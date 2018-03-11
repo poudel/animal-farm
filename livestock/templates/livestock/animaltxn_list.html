@@ -2,22 +2,30 @@
 {% load i18n %}
 {% load humanize %}
 {% load bootstrap4 %}
+{% load font_awesome %}
 
 {% block content %}
 <div class="row">
     <div class="col-sm">
-        <h5>{% trans "Transactions in your farm" %}</h5>
+        <div class="mt-2">
+            <a href="{% url 'livestock:txn-create' %}" class="btn btn-outline-primary btn-sm float-right">
+                {% trans "Add transaction" %}
+            </a>
 
-        <a href="{% url 'livestock:txn-create' %}" class="btn btn-outline-primary btn-sm">
-            {% trans "Add transaction" %}
-        </a>
+            <h5>
+                {% fa "money" %}
+                {% trans "Transactions" %}
+            </h5>
+        </div>
+        <div class="clearfix"></div>
 
-        <div class="mt-2 list-group list-group-flush">
+        <div class="mt-3 list-group list-group-flush">
             {% for item in object_list %}
 
             {% ifchanged item.created_at.date %}
             <div class="list-group-item">
-               <strong>{{ item.created_at.date }}</strong>
+                {% fa 'calendar' %}
+                {{ item.created_at.date }}
             </div>
             {% endifchanged %}
 
