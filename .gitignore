@@ -1,6 +1,8 @@
 
 # Created by https://www.gitignore.io/api/python,django,node,react,javascript
 
+*flycheck_models.py
+
 ### Django ###
 *.log
 *.pot

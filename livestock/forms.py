@@ -31,8 +31,6 @@ class AnimalForm(forms.ModelForm):
             'dob',
             'weight',
             'gender',
-            'is_pregnant',
-            'due_date',
             'lactation',
             'milk_day'
         ]

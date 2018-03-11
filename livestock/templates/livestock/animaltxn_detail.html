@@ -10,7 +10,7 @@
 
                 <a href="{% url 'livestock:txn-list' %}"
                    class="btn btn-link btn-sm">
-                    {% trans "View all" %}
+                    {% trans "All transactions" %}
                 </a>
 
                 <div class="float-right">
@@ -29,12 +29,18 @@
 
             {% if object.animal %}
             <div class="list-group-item">
-                <strong>{% trans "Animal" %}:</strong> {{ object.animal }}
+                <strong>{% trans "Animal" %}:</strong>
+                <a href="{% url 'livestock:animal-detail' object.animal.uuid %}">
+                    {{ object.animal }}
+                </a>
             </div>
             {% endif %}
 
             <div class="list-group-item">
-                <strong>{% trans "Type" %}:</strong> {{ object.type }}
+                <strong>{% trans "Type" %}:</strong>
+                <a href="{% url 'livestock:txn-list' %}?animal={{ object.animal.uuid }}&type={{ object.type.uuid }}">
+                    {{ object.type }}
+                </a>
             </div>
 
             <div class="list-group-item">
@@ -57,6 +63,18 @@
             <div class="list-group-item">
                 <strong>{% trans "Remarks" %}:</strong> {{ object.remarks|default:"-" }}
             </div>
+
+            {% if object.animal %}
+            <div class="list-group-item">
+                <strong>{% trans "Transactions for this animal" %}:</strong>
+                <a href="{% url 'livestock:txn-list' %}?animal={{ object.animal.uuid }}&type__is_expense=True">
+                    Income
+                </a>
+                <a class="ml-2" href="{% url 'livestock:txn-list' %}?animal={{ object.animal.uuid }}&type__is_expense=True">
+                    Expenses
+                </a>
+            </div>
+            {% endif %}
 
         </div>
     </div>

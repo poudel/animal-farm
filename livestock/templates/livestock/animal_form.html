@@ -1,34 +1,54 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load bootstrap4 %}
 {% load font_awesome %}
 
 {% block content %}
 <div class="row">
     <div class="col-sm">
-        {% if object %}
-        <div class="mb-3 mt-2">
+
+        <div class="mt-2 pb-1 border-bottom">
+            {% if not object %}
+            <a href="{% url 'livestock:animal-list' %}" class="btn btn-link btn-sm float-right">
+                {% trans "View all animals" %}
+            </a>
+            {% endif %}
+
             <h5>
+                {% if object.id %}
+
                 <a href="{% url 'livestock:animal-detail' object.uuid %}">
                     {% fa 'arrow-left' %}
                 </a>
                 Editing {{ object.identity }}
+
+                {% else %}
+
+                {% fa "life-bouy" %}
+
+                {% trans "Adding animal" %}
+
+                {% endif %}
             </h5>
         </div>
-        {% endif %}
-	<form action="" method="post">
-	    {% csrf_token %}
-	    {% bootstrap_form form %}
+        <div class="clearfix"></div>
 
-	    {% buttons %}
-	    <button type="submit" class="btn btn-primary">
-              {% if object.id %}
-                Update
-              {% else %}
-	        Save
-              {% endif %}
-	    </button>
-	    {% endbuttons %}	    
-	</form>
+        <div class="mt-3 border-topz">
+	    <form action="" method="post">
+	        {% csrf_token %}
+	        {% bootstrap_form form %}
+
+	        {% buttons %}
+	        <button type="submit" class="btn btn-primary">
+                    {% if object.id %}
+                    Update
+                    {% else %}
+	            Save
+                    {% endif %}
+	        </button>
+	        {% endbuttons %}
+	    </form>
+        </div>
     </div>
 </div>
 {% endblock content %}

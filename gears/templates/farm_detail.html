@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% load i18n %}
+
+{% block content %}
+<div class="row">
+    <div class="col-sm">
+	<div class="list-group list-group-flush">
+            <div class="list-group-item">
+                <a href="{% url 'gears:farm-update' object.uuid %}"
+                   class="btn btn-outline-primary btn-sm">
+                    {% trans "Edit" %}
+                </a>
+            </div>
+
+            <div class="list-group-item">
+                <strong>{% trans "Name:" %}</strong>
+                {{ object.name }}
+            </div>
+
+            <div class="list-group-item">
+                <strong>{% trans "Address:" %}</strong>
+                {{ object.address }}
+            </div>
+
+            <div class="list-group-item">
+                <strong>{% trans "Contact mobile:" %}</strong>
+                {{ object.contact_mobile }}
+            </div>
+
+            <div class="list-group-item">
+                <strong>{% trans "Show breed field:" %}</strong>
+                {{ object.has_breed|yesno }}
+            </div>
+
+            <div class="list-group-item">
+                <strong>{% trans "Show herd field:" %}</strong>
+                {{ object.has_herd|yesno }}
+            </div>
+
+            <div class="list-group-item">
+                <strong>{% trans "Show weight field:" %}</strong>
+                {{ object.has_weight|yesno }}
+            </div>
+
+            <div class="list-group-item">
+                <strong>{% trans "Owner:" %}</strong>
+                {{ object.owner }}
+            </div>
+
+            <div class="list-group-item">
+                <strong>{% trans "Created:" %}</strong>
+                {{ object.created_at.date }}
+                <small class="text-muted">({{ object.created_at|naturaltime }})</small>
+            </div>
+
+            <div class="list-group-item">
+                <strong>{% trans "Last modified:" %}</strong>
+                {{ object.modified_at.date }}
+                <small class="text-muted">({{ object.modified_at|naturaltime }})</small>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
