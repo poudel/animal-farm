@@ -13,15 +13,22 @@ from livestock.models import (
     AnimalMedication,
     MedicationType
 )
+from livestock.forms import AnimalSicknessForm
 
 
-__all__ = ["AnimalSicknessCreate",]
+__all__ = [
+    "AnimalSicknessCreate",
+    "AnimalSicknessUpdate",
+    "AnimalSicknessDetail",
+    "AnimalSicknessList",
+]
 
 
 class AnimalSicknessFormMixin:
     model = AnimalSickness
-    # form_class = AnimalSicknessForm
-    success_message = "hmm"
+    form_class = AnimalSicknessForm
+    template_name = "generic_form.html"
+    success_message = "Successfully saved sickness information."
 
     def get_form_kwargs(self):
         kw = super().get_form_kwargs()
@@ -33,8 +40,20 @@ class AnimalSicknessFormMixin:
             self.request,
             self.success_message.format(self=self)
         )
-        return reverse_lazy("livestock:animal-detail", args=[self.object.uuid])
+        return reverse_lazy("livestock:animal-list")
 
 
-class AnimalSicknessCreate(CreateView):
+class AnimalSicknessCreate(AnimalSicknessFormMixin, CreateView):
+    pass
+
+
+class AnimalSicknessUpdate(AnimalSicknessFormMixin, UpdateView):
+    pass
+
+
+class AnimalSicknessDetail(DetailView):
+    pass
+
+
+class AnimalSicknessList(ListView):
     pass

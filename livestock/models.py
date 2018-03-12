@@ -285,6 +285,11 @@ class AnimalSickness(BaseModel):
         verbose_name=_("animal"),
         on_delete=models.CASCADE
     )
+    type = models.ForeignKey(
+        SicknessType,
+        on_delete=models.CASCADE,
+        verbose_name=_("sickness type")
+    )
     description = models.CharField(_("description"), max_length=200)
     is_recovered = models.BooleanField(_("is recovered"), default=False)
     recovered_on = models.DateField(_("recovered on"), null=True, blank=True)
@@ -324,6 +329,13 @@ class AnimalMedication(BaseModel):
     txn = models.ForeignKey(
         AnimalTxn,
         verbose_name=_("transaction"),
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE
+    )
+    sickness = models.ForeignKey(
+        AnimalSickness,
+        verbose_name=_("sickness"),
         null=True,
         blank=True,
         on_delete=models.CASCADE

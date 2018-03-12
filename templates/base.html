@@ -42,11 +42,16 @@
 		  </li>
                   {% endif %}
 
-                  {% comment %}
+                  {% if request.user.is_authenticated %}
 		  <li class="nav-item active">
-		      <a class="nav-link" href="{% url 'livestock:txn-list' %}">Market</a>
+		      <a class="nav-link" href="{% url 'account_logout' %}">Logout</a>
 		  </li>
-                  {% endcomment %}
+                  {% else %}
+		  <li class="nav-item active">
+		      <a class="nav-link" href="{% url 'account_login' %}">Login</a>
+		  </li>
+                  {% endif %}
+
 	      </ul>
 	  </div>
       </nav>

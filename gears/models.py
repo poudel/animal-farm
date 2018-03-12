@@ -12,6 +12,15 @@ class DefaultQuerySet(models.QuerySet):
         return self.filter(is_deleted=False).filter(*args, **kwargs)
 
 
+class DefaultManager(models.Manager):
+
+    def get_queryset(self):
+        return DefaultQuerySet(self.model, using=self._db)
+
+    def active(self, *args, **kwargs):
+        return self.get_queryset().active(*args, **kwargs)
+
+
 class BaseModel(models.Model):
     created_at = models.DateTimeField(default=timezone.now, editable=False)
     modified_at = models.DateTimeField(auto_now=True)
@@ -22,7 +31,7 @@ class BaseModel(models.Model):
         help_text=_("Set this to True to soft-delete")
     )
 
-    objects = DefaultQuerySet.as_manager()
+    objects = DefaultManager()
 
     class Meta:
         abstract = True
@@ -34,6 +43,16 @@ class BaseModel(models.Model):
             self.is_deleted = True
             self.save()
         return self
+
+
+class FarmManager(DefaultManager):
+
+    def create_default(self, user):
+        farm, _ = self.get_or_create(
+            owner=user,
+            name="FarmHouse",
+        )
+        return farm
 
 
 class Farm(BaseModel):
@@ -70,6 +89,8 @@ class Farm(BaseModel):
         help_text=_("If enabled, will show weight field while adding/updating animals.")
     )
     has_dairy_cattle = models.BooleanField(_("has dairy cattle"), default=True)
+
+    objects = FarmManager()
 
     class Meta:
         verbose_name = _("farm")

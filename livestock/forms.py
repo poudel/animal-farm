@@ -1,6 +1,12 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
-from livestock.models import Animal, IdentityType, AnimalTxn, TxnType
+from livestock.models import (
+    Animal,
+    IdentityType,
+    AnimalTxn,
+    TxnType,
+    AnimalSickness
+)
 
 
 class AnimalForm(forms.ModelForm):
@@ -88,3 +94,19 @@ class AnimalTxnForm(forms.ModelForm):
         self.instance.farm = self.request.farm
         self.instance.created_by = self.request.user
         return super().save(*args, **kwargs)
+
+
+class AnimalSicknessForm(forms.ModelForm):
+
+
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop("request")
+        super().__init__(*args, **kwargs)
+
+        if not self.instance:
+            del self.fields["is_recovered"]
+            del self.fields["recovered_on"]
+
+    class Meta:
+        model = AnimalSickness
+        fields = ("animal", "type", "description", "is_recovered", "recovered_on")

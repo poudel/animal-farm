@@ -27,7 +27,24 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
-LOGIN_URL = "/admin/login/"
+LOGIN_URL = "/accounts/login/"
+LOGIN_REDIRECT_URL = "/"
+
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+SOCIALACCOUNT_EMAIL_VERIFICATION = "none"
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
+ACCOUNT_LOGOUT_ON_GET = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_PRESERVE_USERNAME_CASING = False
+ACCOUNT_USERNAME_MIN_LENGTH = 5
+ACCOUNT_SESSION_REMEMBER = True
+ACCOUNT_ADAPTER = "gears.adapters.CustomAccountAdapter"
+SOCIALACCOUNT_ADAPTER = "gears.adapters.CustomSocialAccountAdapter"
+
+
+EMAIL_PORT = 1025
 
 # Application definition
 
@@ -49,6 +66,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'allauth.socialaccount.providers.facebook',
 
     'gears',
     'livestock',
@@ -145,4 +163,3 @@ STATIC_URL = '/static/'
 
 
 TAGGIT_CASE_INSENSITIVE = True
-

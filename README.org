@@ -8,6 +8,8 @@
     SCHEDULED: <2018-03-10 Sat>
 
 ** Authentication and Registration
+*** DONE Login/register with allauth
+    CLOSED: [2018-03-12 Mon 07:33]
 *** TODO Login with Facebook using allauth
 *** TODO Custom user model
 

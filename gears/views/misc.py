@@ -1,11 +1,11 @@
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, RedirectView
 from django.contrib import messages
 from livestock.models import Animal
 from gears.models import Farm
 from gears.views import UpdateView, DetailView
 
 
-__all__ = ["DashboardView", "FarmUpdate", "FarmDetail"]
+__all__ = ["DashboardView", "FarmUpdate", "FarmDetail", "FarmDetailRedirect"]
 
 
 class DashboardView(TemplateView):
@@ -18,6 +18,12 @@ class DashboardView(TemplateView):
 
         ctx = super().get_context_data(**kwargs)
         return ctx
+
+
+class FarmDetailRedirect(RedirectView):
+
+    def get_redirect_url(self, *args, **kwargs):
+        return self.request.farm.get_absolute_url()
 
 
 class FarmDetail(DetailView):
