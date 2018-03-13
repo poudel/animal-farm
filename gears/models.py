@@ -80,12 +80,12 @@ class Farm(BaseModel):
     )
     has_herd = models.BooleanField(
         _("show herd field"),
-        default=True,
+        default=False,
         help_text=_("If enabled, will show herd field while adding/updating animals.")
     )
     has_weight = models.BooleanField(
         _("show weight field"),
-        default=True,
+        default=False,
         help_text=_("If enabled, will show weight field while adding/updating animals.")
     )
     has_dairy_cattle = models.BooleanField(_("has dairy cattle"), default=True)

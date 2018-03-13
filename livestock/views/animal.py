@@ -10,7 +10,7 @@ from gears.views import (
     DetailView,
     DeleteView
 )
-from livestock.models import Animal
+from livestock.models import Animal, Herd
 from livestock.forms import AnimalForm
 
 
@@ -19,7 +19,11 @@ __all__ = [
     "AnimalList",
     "AnimalDetail",
     "AnimalUpdate",
-    "AnimalDelete"
+    "AnimalDelete",
+    "HerdList",
+    "HerdCreate",
+    "HerdUpdate",
+    "HerdDelete"
 ]
 
 
@@ -72,3 +76,52 @@ class AnimalDelete(AnimalDetailMixin, DeleteView):
     success_url = reverse_lazy("livestock:animal-list")
     message = "{self.object.identity} has been deleted."
     detail_url_name = "livestock:animal-detail"
+
+
+class HerdMixin:
+    queryset = Herd.objects.active()
+
+    def get_queryset(self):
+        return self.queryset.filter(
+            farm__owner=self.request.user
+        ).order_by('-id')
+
+
+class HerdList(HerdMixin, ListView):
+    pass
+
+
+class HerdFormMixin:
+    model = Herd
+    fields = ("name",)
+    success_message = "Successfully saved {self.object.name}"
+    template_name = "generic_form.html"
+
+    def get_success_url(self):
+        messages.success(
+            self.request,
+            self.success_message.format(self=self)
+        )
+        return reverse_lazy("livestock:herd-list")
+
+    def form_valid(self, form):
+        if not hasattr(form.instance, 'farm'):
+            form.instance.farm = self.request.farm
+        return super().form_valid(form)
+
+
+class HerdCreate(HerdFormMixin, CreateView):
+    pass
+
+
+class HerdUpdate(HerdFormMixin, UpdateView):
+    pass
+
+
+class HerdDelete(HerdMixin, DeleteView):
+    template_name = "generic_delete_confirm.html"
+    success_url = reverse_lazy("livestock:herd-list")
+    message = "Herd {self.object.herd} has been deleted."
+
+    def get_cancel_url(self):
+        return reverse_lazy("livestock:herd-list")

@@ -46,4 +46,20 @@ urlpatterns = [
          views.AnimalTxnDelete.as_view(),
          name="txn-delete"),
 
+    path('herd/',
+         views.HerdList.as_view(),
+         name="herd-list"),
+
+    path('herd/create/',
+         views.HerdCreate.as_view(),
+         name="herd-create"),
+
+    path('herd/<uuid:uuid>/update/',
+         views.HerdUpdate.as_view(),
+         name="herd-update"),
+
+    path('herd/<uuid:uuid>/delete/',
+         views.HerdDelete.as_view(),
+         name="herd-delete"),
+
 ]
