@@ -33,6 +33,11 @@ class Breed(BaseModel):
 
 
 class Herd(BaseModel):
+    farm = models.ForeignKey(
+        Farm,
+        on_delete=models.CASCADE,
+        verbose_name=_("farm")
+    )
     name = models.CharField(_("name"), max_length=50, unique=True)
 
     def __str__(self):

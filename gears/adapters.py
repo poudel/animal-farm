@@ -5,6 +5,9 @@ from gears.models import Farm
 
 class CustomAccountAdapter(DefaultAccountAdapter):
 
+    def is_open_for_signup(self, request):
+        return False
+
     def save_user(self, request, user, form):
         user = super().save_user(request, user, form)
         Farm.objects.create_default(user)
