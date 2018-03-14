@@ -1,3 +1,10 @@
 * Introduction
 
-A FarmHouse management app
+A FarmHouse management app written in Django. A work in progress.
+
+
+* Planned Features
+** Covering broad range of livestock management
+** Tracking of medication, vaccination etc.
+** Natality, breeding, tracking of generations etc.
+** Many more
